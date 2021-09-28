@@ -79,16 +79,14 @@ def index(request):
 def index(request):
     if request.method == 'POST':
         city = request.POST['city']
-        source = urllib.request.urlopen('https://api.weatherbit.io/v2.0/current?city={}&key=bd0ddb893319407f87237d48b526e8bc&include=minutely').read()
-        source = source.format(city)
+        source = urllib.request.urlopen('https://api.weatherbit.io/v2.0/current?city='+ city +'&key=bd0ddb893319407f87237d48b526e8bc&include=current').read()
         list_of_data = json.loads(source)
-
         data = {
             'timezone' : str(list_of_data['data'][0]['timezone']) ,
             'wind_dirc': str(list_of_data['data'][0]['wind_cdir']),
             'icon': str(list_of_data['data'][0]['weather']['icon']),
             'icon_description': str(list_of_data['data'][0]['weather']['description']),
-            'temp' : str(list_of_data['data'][1]['temp']),
+            'temp' : str(list_of_data['data'][0]['temp']),
             
         }
 

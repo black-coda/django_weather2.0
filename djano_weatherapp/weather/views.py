@@ -1,9 +1,11 @@
 from django.shortcuts import render
+import urllib
+import json
 
 
 
 # Create your views here.
-def index(request):
+def index_____(request):
     url = 'https://api.weatherbit.io/v2.0/current?city={}&key=bd0ddb893319407f87237d48b526e8bc&include=minutely'
     city = 'lagos'
     url = url.format(city)
@@ -22,7 +24,7 @@ def index(request):
 
     context = {'weather': data}
 
-    return render(request, 'weather/index.html', context)
+    return render(request, 'weather/index.html',)
 
 """
 def index_(request):
@@ -67,4 +69,33 @@ def index(request):
         }
 
     return render(request, 'weather/index.html', data)
+
+
+def index(request):
+    return render(request, 'weather/index.html')
+
 """
+
+def index(request):
+    if request.method == 'POST':
+        city = request.POST['city']
+        source = urllib.request.urlopen('https://api.weatherbit.io/v2.0/current?city={}&key=bd0ddb893319407f87237d48b526e8bc&include=minutely').read()
+        source = source.format(city)
+        list_of_data = json.loads(source)
+
+        data = {
+            'timezone' : str(list_of_data['data'][0]['timezone']) ,
+            'wind_dirc': str(list_of_data['data'][0]['wind_cdir']),
+            'icon': str(list_of_data['data'][0]['weather']['icon']),
+            'icon_description': str(list_of_data['data'][0]['weather']['description']),
+            'temp' : str(list_of_data['data'][1]['temp']),
+            
+        }
+
+        print(data)
+    else:
+        data = {
+
+        }
+
+    return render(request, 'weather/index.html', data)

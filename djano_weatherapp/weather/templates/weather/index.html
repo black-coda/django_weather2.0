@@ -57,10 +57,10 @@
 						<div class="today forecast">
 							<div class="forecast-header">
 								<div class="day">Monday</div>
-								<div class="date">6 Oct</div>
+								<div class="date">{% now "jS F Y H:i" %}</div>
 							</div> <!-- .forecast-header -->
 							<div class="forecast-content">
-								<div class="location">{weather.timezone}</div>
+								<div class="location">{{weather.timezone}}</div>
 								<div class="degree">
 									<div class="num">23<sup>o</sup>C</div>
 									<div class="forecast-icon">
